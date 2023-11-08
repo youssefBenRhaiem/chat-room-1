@@ -55,7 +55,9 @@ app.use(
   },
   roomRouter
 );
-
+app.use("/api/", (req, res, next) => {
+  res.json({ msg: "hallo there" });
+});
 //io
 
 io.on("connect", (socket) => {
