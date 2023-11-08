@@ -9,7 +9,7 @@ export default defineConfig({
       "/api": {
         target: [
           "http://localhost:3000",
-          "https://little-chat-room-server.onrender.com/",
+          "https://little-chat-room-server.onrender.com",
         ],
         changeOrigin: true,
       },
