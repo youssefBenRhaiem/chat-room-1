@@ -4,6 +4,7 @@ const express = require("express");
 const cors = require("cors");
 const { createServer } = require("http");
 const { Server } = require("socket.io");
+const { createProxyMiddleware } = require("http-proxy-middleware");
 
 const homeRouter = require("./src/Routes/homeRouter");
 const roomRouter = require("./src/Routes/roomRouter");
@@ -21,11 +22,37 @@ const io = new Server(httpServer, {
 //express
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: ["http://localhost:5173"],
     credentials: "true",
   })
 );
 app.use(express.json());
+// Define the proxy middleware for local development.
+const localProxyMiddleware = createProxyMiddleware({
+  target: "http://127.0.0.1:3000",
+  changeOrigin: true,
+});
+
+// Define the proxy middleware for production.
+const productionProxyMiddleware = createProxyMiddleware({
+  target: "https://little-chat-room-server.onrender.com",
+  changeOrigin: true,
+});
+
+// Use the appropriate middleware based on the environment.
+if (process.env.NODE_ENV === "development") {
+  // Use local proxy middleware during development.
+  app.use((req, res, next) => {
+    localProxyMiddleware;
+    next();
+  });
+} else {
+  // Use production proxy middleware in the production environment.
+  app.use((req, res, next) => {
+    productionProxyMiddleware;
+    next();
+  });
+}
 
 app.use((req, res, next) => {
   console.log(req.path, req.method);
