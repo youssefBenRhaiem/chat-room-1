@@ -49,6 +49,7 @@
     "mime": "^1.6.0",
     "mime-db": "^1.52.0",
     "mime-types": "^2.1.35",
+    "mongodb": "^6.2.0",
     "mongoose": "^7.5.2",
     "ms": "^2.0.0",
     "negotiator": "^0.6.3",
@@ -69,7 +70,6 @@
     "side-channel": "^1.0.4",
     "socket.io": "^4.7.2",
     "statuses": "^2.0.1",
-    "tailwindcss": "^3.3.5",
     "toidentifier": "^1.0.1",
     "type-is": "^1.6.18",
     "utils-merge": "^1.0.1",
@@ -80,7 +80,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server.js",
     "dev": "nodemon server.js",
-    "build":"npm i"
+    "build": "npm i"
   },
   "author": "",
   "license": "ISC",
