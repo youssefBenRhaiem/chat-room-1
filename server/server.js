@@ -14,7 +14,7 @@ const app = express();
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
-    origin: "http://localhost:5173",
+    origin: ["http://localhost:5173", "http://localhost:4173"],
     credentials: true,
   },
 });
@@ -22,14 +22,14 @@ const io = new Server(httpServer, {
 //express
 app.use(
   cors({
-    origin: ["http://localhost:5173"],
+    origin: ["http://localhost:5173", "http://localhost:4173"],
     credentials: "true",
   })
 );
 app.use(express.json());
 // Define the proxy middleware for local development.
 const localProxyMiddleware = createProxyMiddleware({
-  target: "http://127.0.0.1:3000",
+  target: "http://localhost:3000",
   changeOrigin: true,
 });
 

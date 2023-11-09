@@ -1,18 +1,27 @@
-import { defineConfig } from "vite";
+import { defineConfig, loadEnv } from "vite";
 import react from "@vitejs/plugin-react-swc";
+import { resolve } from "path";
 
 // https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [react()],
-  server: {
-    proxy: {
-      "/api": {
-        target: [
-          "http://localhost:3000",
-          "https://little-chat-room-server.onrender.com",
-        ],
-        changeOrigin: true,
+export default ({ mode }) => {
+  process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
+  return defineConfig({
+    plugins: [react()],
+    build: {
+      rollupOptions: {
+        input: {
+          main: "src/main.jsx", // Your entry point file
+          main: resolve(__dirname, "index.html"),
+        },
       },
     },
-  },
-});
+    server: {
+      proxy: {
+        "/api": {
+          target: process.env.VITE_API_BASE_URL,
+          changeOrigin: true,
+        },
+      },
+    },
+  });
+};
