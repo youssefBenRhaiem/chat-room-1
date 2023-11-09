@@ -40,7 +40,7 @@ const productionProxyMiddleware = createProxyMiddleware({
 });
 
 // Use the appropriate middleware based on the environment.
-if (process.env.NODE_ENV === "development") {
+if (process.env.ENV == "development") {
   // Use local proxy middleware during development.
   app.use((req, res, next) => {
     localProxyMiddleware;

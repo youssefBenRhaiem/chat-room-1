@@ -60,6 +60,12 @@ export default () => {
                   >
                     Join
                   </button>
+                  <Link
+                    className="px-2 bg-green-500 rounded text-white"
+                    to={`/room/${key}`}
+                  >
+                    test join
+                  </Link>
                 </td>
               </tr>
             ))}

@@ -3,10 +3,15 @@ import { io } from "socket.io-client";
 
 export default () => {
   const [socket, setSocket] = useState(
-    io(import.meta.env.VITE_API_BASE_URL, {
-      autoConnect: false,
-      withCredentials: false,
-    })
+    io(
+      import.meta.env.VITE_ENV == "development"
+        ? "http://localhost:3000"
+        : "https://little-chat-room-server.onrender.com",
+      {
+        autoConnect: false,
+        withCredentials: false,
+      }
+    )
   );
   useEffect(() => {
     socket.connect();
