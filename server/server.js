@@ -14,10 +14,7 @@ const app = express();
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
-    origin: [
-      "http://localhost:5173",
-      "https://little-chat-room-server.onrender.com",
-    ],
+    origin: ["http://localhost:5173", "https://little-chat-room.netlify.app"],
     credentials: true,
   },
 });
@@ -25,10 +22,7 @@ const io = new Server(httpServer, {
 //express
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "https://little-chat-room-server.onrender.com",
-    ],
+    origin: ["http://localhost:5173", "https://little-chat-room.netlify.app"],
     credentials: "true",
   })
 );
@@ -41,7 +35,7 @@ const localProxyMiddleware = createProxyMiddleware({
 
 // Define the proxy middleware for production.
 const productionProxyMiddleware = createProxyMiddleware({
-  target: "https://little-chat-room-server.onrender.com",
+  target: "https://little-chat-room.netlify.app",
   changeOrigin: true,
 });
 

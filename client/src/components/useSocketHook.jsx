@@ -3,7 +3,7 @@ import { io } from "socket.io-client";
 
 export default () => {
   const [socket, setSocket] = useState(
-    io("http://127.0.0.1:3000", {
+    io(import.meta.env.VITE_API_BASE_URL, {
       autoConnect: false,
       withCredentials: false,
     })
