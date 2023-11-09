@@ -14,7 +14,10 @@ const app = express();
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
-    origin: ["http://localhost:5173", "http://localhost:4173"],
+    origin: [
+      "http://localhost:5173",
+      "https://little-chat-room-server.onrender.com",
+    ],
     credentials: true,
   },
 });
@@ -22,7 +25,10 @@ const io = new Server(httpServer, {
 //express
 app.use(
   cors({
-    origin: ["http://localhost:5173", "http://localhost:4173"],
+    origin: [
+      "http://localhost:5173",
+      "https://little-chat-room-server.onrender.com",
+    ],
     credentials: "true",
   })
 );
