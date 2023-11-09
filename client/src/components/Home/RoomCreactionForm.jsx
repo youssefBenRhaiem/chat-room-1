@@ -4,6 +4,10 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export default () => {
+  const path =
+    import.meta.env.VITE_ENV == "development"
+      ? "http://localhost:3000"
+      : "https://little-chat-room-server.onrender.com";
   const initState = {
     modalShow: false,
     privacy: "Public",
@@ -16,13 +20,12 @@ export default () => {
   };
 
   const [state, setState] = useState(initState);
-  console.log(state);
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const id = uuidv4();
-      const res = await axios.post("api/home/createRoom", {
+      const res = await axios.post(path + "/api/home/createRoom", {
         params: { id, name: state.roomName, password: state.roomPassword },
       });
       if (res) {

@@ -3,10 +3,14 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 export default () => {
+  const path =
+    import.meta.env.VITE_ENV == "development"
+      ? "http://localhost:3000"
+      : "https://little-chat-room-server.onrender.com";
   const getRooms = async () => {
     try {
       setState({ ...state, isLoading: true });
-      const res = await axios.get("api/home/getAllRooms");
+      const res = await axios.get(path + "/api/home/getAllRooms");
       setState({ ...state, isLoading: false, rooms: res.data.rooms });
     } catch (err) {
       console.error(`error: ${err} `);
