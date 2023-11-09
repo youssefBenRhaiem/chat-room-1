@@ -14,7 +14,7 @@ export default ({ mode }) => {
     server: {
       proxy: {
         "/api": {
-          target: proxy,
+          target: "https://little-chat-room-server.onrender.com",
           changeOrigin: true,
         },
       },
