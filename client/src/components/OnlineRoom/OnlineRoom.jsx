@@ -10,7 +10,6 @@ export default () => {
   const { roomID } = useParams();
   const initState = {
     annoucement: "",
-    showUsersList: true,
   };
   const [state, setState] = useState(initState);
   const socket = useSocketHook(roomID);
@@ -37,53 +36,13 @@ export default () => {
           <div className="text-center space-x-4">{state.annoucement}</div>
         </div>
       )}
-      <div className="flex flex-row bg-gray-700 ">
-        <div className="min-w-fit w-full bg-white">
+      <div className="w-full flex flex-row bg-white ">
+        <div className="w-fit h-screen p-1">
+          <UsersList socket={socket} />
+        </div>
+        <div className="w-fit sm:w-full h-screen p-1 ms-1">
           <MessagesBox socket={socket} />
           <SendMessage socket={socket} />
-        </div>
-        <div className="max-w-fit min-w-fit bg-white justify-center">
-          <button
-            className="mt-2 p-1 items-center justify-center bg-blue-500 rounded-full"
-            onClick={() =>
-              setState({ ...state, showUsersList: !state.showUsersList })
-            }
-          >
-            {state.showUsersList ? (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                className="h-8 w-8"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
-            ) : (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-8 w-8"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              </svg>
-            )}
-          </button>
-          <div className={`${state.showUsersList ? "block" : "hidden"}`}>
-            <UsersList socket={socket} />
-          </div>
         </div>
       </div>
     </>

@@ -9,7 +9,7 @@ export default () => {
       ? "http://localhost:3000"
       : "https://little-chat-room-server.onrender.com";
   const initState = {
-    modalShow: false,
+    toggleCreationForm: false,
     privacy: "Public",
     roomName: "",
     roomNameErr: false,
@@ -52,11 +52,11 @@ export default () => {
       <button
         className="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
         type="button"
-        onClick={() => setState({ ...state, modalShow: true })}
+        onClick={() => setState({ ...state, toggleCreationForm: true })}
       >
         Create Room +
       </button>
-      {state.modalShow ? (
+      {state.toggleCreationForm ? (
         <div
           className="relative z-10"
           aria-labelledby="modal-title"
@@ -85,7 +85,9 @@ export default () => {
                       <button
                         type="button"
                         className="p-2 inline-flex items-center justify-center rounded-full bg-red-100 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring focus:ring-red-300"
-                        onClick={() => setState({ ...state, modalShow: false })}
+                        onClick={() =>
+                          setState({ ...state, toggleCreationForm: false })
+                        }
                       >
                         <svg
                           className="h-6 w-6"
@@ -234,7 +236,9 @@ export default () => {
                   <button
                     type="button"
                     className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
-                    onClick={() => setState({ ...state, modalShow: false })}
+                    onClick={() =>
+                      setState({ ...state, toggleCreationForm: false })
+                    }
                   >
                     Cancel
                   </button>

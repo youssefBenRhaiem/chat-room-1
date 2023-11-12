@@ -5,7 +5,7 @@ class ServerRoom {
     this.clients = 0;
     this.msg = [];
     this.password = password;
-    this.privacy = !password ? "Private" : "Public";
+    this.privacy = password ? "Private" : "Public";
   }
 
   join() {

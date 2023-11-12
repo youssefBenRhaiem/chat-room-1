@@ -1,15 +1,19 @@
 const asyncHandler = require("express-async-handler");
-const { ServerRoom } = require("../serverRoom");
+// const { ServerRoom } = require("../serverRoom");
 
 // @desc Get A Room
 // @route GET /room/:id
 // @access Private
 const accessRoom = asyncHandler(async (req, res) => {
-  const { id, password } = req.params;
+  const { id, password } = req.body.params;
+  console.log(req.body.params);
   if (!req.rooms[id]) return res.status(404).json({ msg: "No room found !" });
   if (req.rooms[id].password != password)
-    return res.status(404).json({ msg: "Accessc denied ,Wrong password !" });
-  res.status(200).json();
+    return res.status(404).json({
+      name: "roomPasswordErr",
+      msg: "Accessc denied ,Wrong password !",
+    });
+  res.status(200).json({ id });
 });
 
 // // @desc Post Create a Room

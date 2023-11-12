@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import Room from "./components/OnlineRoom/Room";
 import Page404 from "./components/Page404";
 import Home from "./components/Home/Home";
 import OnlineRoom from "./components/OnlineRoom/OnlineRoom";

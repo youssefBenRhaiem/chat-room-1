@@ -61,7 +61,7 @@ app.use((req, res, next) => {
 
 const users = {};
 const serverRooms = {
-  1: new ServerRoom({ id: 1, name: "test", password: "" }),
+  1: new ServerRoom({ id: 1, name: "test", password: "123" }),
 };
 
 // Home Router
@@ -97,7 +97,11 @@ io.on("connect", (socket) => {
 
     room.join();
     socket.join(roomID);
-    io.in(roomID).emit("onlineUsers", users);
+    io.in(roomID).emit("onlineUsers", {
+      users: Object.fromEntries(
+        Object.entries(users).filter(([userID, data]) => data === roomID)
+      ),
+    });
     io.in(roomID).emit("annoucement", `${socket.id} has connected`);
     // io.in(roomID).emit("announcement", {
     //   username: socket.id,
@@ -115,7 +119,7 @@ io.on("connect", (socket) => {
     const room = serverRooms[roomID];
     room.setMsg(socket.id, msg);
     console.log("message: " + msg);
-    io.in(roomID).emit("receiveMessages", room.getMsg());
+    io.in(roomID).emit("chat", { user: socket.id, msg });
   });
   socket.on("disconnect", () => {
     if (!users.hasOwnProperty(socket.id)) return socket.disconnect();
@@ -127,8 +131,7 @@ io.on("connect", (socket) => {
 
     if (serverRooms[roomID].clients == 0) {
       console.log(`Room ${serverRooms[roomID].name} has been destroyed`);
-      delete serverRooms[roomID];
-      return;
+      return delete serverRooms[roomID];
     }
     io.in(roomID).emit("annoucement", `${socket.id} has disconnected`);
 
@@ -136,7 +139,12 @@ io.on("connect", (socket) => {
     //   username: socket.id,
     //   status: "offline",
     // });
-    io.in(roomID).emit("onlineUsers", users);
+
+    io.in(roomID).emit("onlineUsers", {
+      users: Object.fromEntries(
+        Object.entries(users).filter(([userID, data]) => data === roomID)
+      ),
+    });
   });
 });
 
