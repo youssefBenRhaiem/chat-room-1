@@ -18,7 +18,10 @@ export default ({ socket }) => {
             value={state.message}
             onChange={(e) => setState({ ...state, message: e.target.value })}
           />
-          <button className="absolute w-0 h-0 right-7 top-[5%] text-gray-400 hover:text-gray-600">
+          <button
+            className="absolute w-0 h-0 right-7 top-[5%] text-gray-400 hover:text-gray-600"
+            type="button"
+          >
             <svg
               className="w-6 h-6"
               fill="none"
@@ -67,9 +70,10 @@ export default ({ socket }) => {
           <button
             className="flex items-center justify-center bg-indigo-500 hover:bg-indigo-600 rounded-xl text-white px-4 py-1 flex-shrink-0"
             type="submit"
-            form="sendMessageForm"
             onClick={(e) => {
-              if (state.message) socket.emit("sendMessage", state.message);
+              state.message;
+              if (state.message.trim())
+                socket.emit("sendMessage", state.message.trim());
               return setState(initState);
             }}
           >

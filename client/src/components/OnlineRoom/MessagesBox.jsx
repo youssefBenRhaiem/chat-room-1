@@ -46,7 +46,7 @@ export default ({ socket }) => {
                 className="p-3 relative flex flex-row items-center justify-end rounded-lg"
               >
                 <div className="py-2 px-4 mr-3 relative text-sm text-white bg-blue-500 shadow rounded-xl">
-                  <div className="whitespace-normal break-words max-w-[250px]">
+                  <div className="break-words max-w-[250px]">
                     {msg.msg}
                   </div>
                 </div>
