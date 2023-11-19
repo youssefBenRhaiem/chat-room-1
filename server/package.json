@@ -77,7 +77,6 @@
     "vary": "^1.1.2"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server.js",
     "dev": "nodemon server.js",
     "build": "npm i"
@@ -85,6 +84,6 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@types/express": "^4.17.17"
+    "@types/express": "^4.17.21"
   }
 }

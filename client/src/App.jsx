@@ -15,5 +15,4 @@ export default function App() {
     </BrowserRouter>
   );
 }
-function name() {}
-() => {};
+
