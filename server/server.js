@@ -58,10 +58,7 @@ app.use((req, res, next) => {
   console.log(req.path, req.method);
   next();
 });
-
-const users = {};
-const serverRooms = {
-  1: new ServerRoom({ id: 1, name: "test1", password: "123" }),
+/*  1: new ServerRoom({ id: 1, name: "test1", password: "123" }),
   2: new ServerRoom({ id: 2, name: "test2", password: "123" }),
   3: new ServerRoom({ id: 3, name: "test3", password: "123" }),
   4: new ServerRoom({ id: 4, name: "test4", password: "123" }),
@@ -73,8 +70,9 @@ const serverRooms = {
   10: new ServerRoom({ id: 10, name: "test10", password: "123" }),
   11: new ServerRoom({ id: 11, name: "test11", password: "123" }),
   12: new ServerRoom({ id: 12, name: "test12", password: "123" }),
-  13: new ServerRoom({ id: 13, name: "test13", password: "123" }),
-};
+  13: new ServerRoom({ id: 13, name: "test13", password: "123" }), */
+const users = {};
+const serverRooms = {};
 
 // Home Router
 app.use(

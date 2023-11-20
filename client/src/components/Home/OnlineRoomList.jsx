@@ -67,7 +67,9 @@ export default () => {
   if (state.loadingRooms)
     return (
       <div className="flex flex-col justify-center text-center">
-        <h1>We are loading the rooms</h1>
+        <h1 className="text-4xl font-thin text-center">
+          We are loading the rooms
+        </h1>
 
         <div className="p-1 flex justify-center" role="status">
           <svg
@@ -92,7 +94,7 @@ export default () => {
     );
   if (state.serverErr)
     return (
-      <div className="p-0 m-0 w-full h-full bg-red-500 text-white">
+      <div className="p-0 m-0 w-full h-full text-red">
         <div className="flex justify-center mt-6">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -121,6 +123,14 @@ export default () => {
             </p>
           </div>
         </div>
+      </div>
+    );
+  if (Object.keys(state.rooms).length == 0)
+    return (
+      <div className=" text-center font-sans">
+        <h1 className="text-4xl font-thin text-center">
+          No rooms currently available.
+        </h1>
       </div>
     );
   return (
