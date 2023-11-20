@@ -61,11 +61,15 @@ export default () => {
   }, []);
   if (state.loadingRooms)
     return (
-      <h1 className="flex flex-col justify-center">We are loading the rooms</h1>
+      <div className="flex flex-col justify-center">
+        <h1>We are loading the rooms</h1>
+      </div>
     );
   if (state.serverErr)
     return (
-      <h1 className="flex flex-col justify-center">Something went Wrong </h1>
+      <div className="flex flex-col justify-center">
+        <h1>Something went Wrong </h1>
+      </div>
     );
   return (
     <>
