@@ -59,8 +59,14 @@ export default () => {
   useEffect(() => {
     getRooms();
   }, []);
-  if (state.loadingRooms) return <h1>We are loading the rooms</h1>;
-  if (state.serverErr) return <h1>Something went Wrong </h1>;
+  if (state.loadingRooms)
+    return (
+      <h1 className="flex flex-col justify-center">We are loading the rooms</h1>
+    );
+  if (state.serverErr)
+    return (
+      <h1 className="flex flex-col justify-center">Something went Wrong </h1>
+    );
   return (
     <>
       <div className="p-2 mx-auto w-11/12 overflow-auto flex flex-col justify-center rounded shadow-lg">
