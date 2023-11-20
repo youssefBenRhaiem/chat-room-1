@@ -4,8 +4,8 @@ import OnlineRoomList from "./OnlineRoomList";
 
 export default () => {
   return (
-    <div id="Home">
-      <RoomCreactionForm className="mb-2" />
+    <div id="Home" className="flex flex-col justify-center">
+      <RoomCreactionForm />
       <OnlineRoomList />
     </div>
   );

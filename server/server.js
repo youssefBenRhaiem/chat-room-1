@@ -61,7 +61,19 @@ app.use((req, res, next) => {
 
 const users = {};
 const serverRooms = {
-  1: new ServerRoom({ id: 1, name: "test", password: "123" }),
+  1: new ServerRoom({ id: 1, name: "test1", password: "123" }),
+  2: new ServerRoom({ id: 2, name: "test2", password: "123" }),
+  3: new ServerRoom({ id: 3, name: "test3", password: "123" }),
+  4: new ServerRoom({ id: 4, name: "test4", password: "123" }),
+  5: new ServerRoom({ id: 5, name: "test5", password: "123" }),
+  6: new ServerRoom({ id: 6, name: "test6", password: "123" }),
+  7: new ServerRoom({ id: 7, name: "test7", password: "123" }),
+  8: new ServerRoom({ id: 8, name: "test8", password: "123" }),
+  9: new ServerRoom({ id: 9, name: "test9", password: "123" }),
+  10: new ServerRoom({ id: 10, name: "test10", password: "123" }),
+  11: new ServerRoom({ id: 11, name: "test11", password: "123" }),
+  12: new ServerRoom({ id: 12, name: "test12", password: "123" }),
+  13: new ServerRoom({ id: 13, name: "test13", password: "123" }),
 };
 
 // Home Router

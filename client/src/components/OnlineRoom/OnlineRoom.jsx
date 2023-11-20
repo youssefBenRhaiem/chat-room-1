@@ -1,4 +1,4 @@
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { useEffect, useState } from "react";
 
 import useSocketHook from "../useSocketHook";
@@ -8,13 +8,15 @@ import MessagesBox from "./MessagesBox";
 
 export default () => {
   const { roomID } = useParams();
+  const navigate = useNavigate();
   const initState = {
     annoucement: "",
+    serverErr: "",
   };
   const [state, setState] = useState(initState);
   const socket = useSocketHook(roomID);
   socket.on("disconnect", () => {
-    //
+    navigate("/");
   });
   socket.on("connect", () => {
     socket.emit("join", roomID);
@@ -24,9 +26,6 @@ export default () => {
     setTimeout(() => {
       setState({ ...state, annoucement: "" });
     }, 2500);
-  });
-  socket.on("disconnect", () => {
-    // setError("Servers are down");
   });
   useEffect(() => {}, []);
   return (

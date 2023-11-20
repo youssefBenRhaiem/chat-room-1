@@ -25,7 +25,7 @@ export default () => {
         params: {
           id: state.roomID,
           password: state.roomPassword,
-        }
+        },
       });
       setState(initState);
       return navigate(`/room/${res.data.id}`);
@@ -50,6 +50,8 @@ export default () => {
     roomPassword: "",
     roomPasswordErr: "",
     serverErr: "",
+    page: 1,
+    displayedRooms: 3,
   };
   const [state, setState] = useState(initState);
   const navigate = useNavigate();
@@ -58,44 +60,161 @@ export default () => {
     getRooms();
   }, []);
   if (state.loadingRooms) return <h1>We are loading the rooms</h1>;
-  if (state.err) return <h1>Something went Wrong </h1>;
+  if (state.serverErr) return <h1>Something went Wrong </h1>;
   return (
     <>
-      <table className="table-auto ">
-        <thead className="bg-purple-100">
-          <tr>
-            <th className="px-4 border">Name</th>
-            <th className="px-4 border">Joined</th>
-            <th className="px-4 border">join</th>
-          </tr>
-        </thead>
-        <tbody>
-          {Object.keys(state.rooms).length != 0 &&
-            Object.keys(state.rooms).map((key) => (
-              <tr key={key}>
-                <td className="px-4 py-1 border">{state.rooms[key].name}</td>
-                <td className="px-4 py-1 border">{state.rooms[key].clients}</td>
-                <td className="px-4 py-1 border">
+      <div className="p-2 mx-auto w-11/12 overflow-auto flex flex-col justify-center rounded shadow-lg">
+        <div className="pb-4 ps-3">
+          <label>
+            Show{"  "}
+            <select
+              className="p-2.5 w-fit bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              defaultValue={state.displayedRooms}
+              onChange={(e) =>
+                setState({ ...state, displayedRooms: e.target.value })
+              }
+            >
+              <option value="3">3</option>
+              <option value="10">10</option>
+              <option value="25">25</option>
+            </select>
+            {"  "}Rooms
+          </label>
+        </div>
+        <table className="table-auto ">
+          <thead className="bg-purple-100">
+            <tr>
+              <th className="px-4 border">Room Name</th>
+              <th className="px-4 border">People Joined</th>
+              <th className="px-4 border">Join The Room</th>
+            </tr>
+          </thead>
+          <tbody>
+            {Object.keys(state.rooms).length != 0 &&
+              Object.keys(state.rooms)
+                .slice(
+                  (state.page - 1) * state.displayedRooms,
+                  state.page * state.displayedRooms
+                )
+                .map((key) => (
+                  <tr key={key}>
+                    <td className="px-4 py-1 border">
+                      {state.rooms[key].name}
+                    </td>
+                    <td className="px-4 py-1 border">
+                      {state.rooms[key].clients}
+                    </td>
+                    <td className="px-4 py-1 border flex justify-center">
+                      <button
+                        className="px-2 bg-pink-500 rounded text-white"
+                        onClick={() => {
+                          if (state.rooms[key].privacy == "Public")
+                            return navigate(`/room/${key}`);
+                          return setState({
+                            ...state,
+                            roomID: key,
+                            toggleRoomPassword: true,
+                          });
+                        }}
+                      >
+                        Join
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+          </tbody>
+        </table>
+        {Object.keys(state.rooms).length > state.displayedRooms && (
+          <>
+            <hr className="mx-auto my-4 w-3/4 border bg-gray-200 dark:bg-gray-700" />
+            <div className="flex justify-center">
+              <ul className="inline-flex -space-x-px text-base h-10">
+                <li>
                   <button
-                    className="px-2 bg-pink-500 rounded text-white"
+                    className="px-3 h-8 sm:px-4 sm:h-10 ms-0 flex items-center justify-center leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                    onClick={() => setState({ ...state, page: 1 })}
+                  >
+                    <span className="sr-only">Min Previous</span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth="1.5"
+                      stroke="currentColor"
+                      className="w-6 h-6"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M18.75 19.5l-7.5-7.5 7.5-7.5m-6 15L5.25 12l7.5-7.5"
+                      />
+                    </svg>
+                  </button>
+                </li>
+                <li hidden={state.page < 2}>
+                  <button
+                    className="px-3 h-8 sm:px-4 sm:h-10 flex items-center justify-center leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                    onClick={() => setState({ ...state, page: state.page - 1 })}
+                  >
+                    {state.page - 1}
+                  </button>
+                </li>
+                <li>
+                  <button
+                    aria-current="page"
+                    className="px-3 h-8 sm:px-4 sm:h-10 flex items-center justify-center text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white"
+                  >
+                    {state.page}
+                  </button>
+                </li>
+                <li>
+                  <button
+                    className="px-3 h-8 sm:px-4 sm:h-10 flex items-center justify-center leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
                     onClick={() => {
-                      console.log(state.rooms[key].privacy);
-                      if (state.rooms[key].privacy == "Public")
-                        return navigate(`/room/${key}`);
-                      return setState({
+                      const next =
+                        (state.displayedRooms * state.page) /
+                        Object.keys(state.rooms).length;
+                      if (next < 1)
+                        setState({ ...state, page: state.page + 1 });
+                    }}
+                  >
+                    {state.page + 1}
+                  </button>
+                </li>
+                <li>
+                  <button
+                    className="px-3 h-8 sm:px-4 sm:h-10 flex items-center justify-center leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                    onClick={() => {
+                      const maxNext =
+                        Object.keys(state.rooms).length / state.displayedRooms;
+                      setState({
                         ...state,
-                        roomID: key,
-                        toggleRoomPassword: true,
+                        page: maxNext < 1 ? 1 : Math.ceil(maxNext),
                       });
                     }}
                   >
-                    Join
+                    <span className="sr-only">Max Next</span>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth="1.5"
+                      stroke="currentColor"
+                      className="w-6 h-6"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5"
+                      />
+                    </svg>
                   </button>
-                </td>
-              </tr>
-            ))}
-        </tbody>
-      </table>
+                </li>
+              </ul>
+            </div>
+          </>
+        )}
+      </div>
       {state.toggleRoomPassword ? (
         <div
           className="relative z-10"

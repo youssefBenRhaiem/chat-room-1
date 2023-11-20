@@ -48,13 +48,27 @@ export default () => {
     }
   };
   return (
-    <>
+    <div className="flex justify-center p-2">
       <button
-        className="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+        className="px-6 py-3 mr-1 mb-1 w-fit flex text-white font-bold uppercase text-sm rounded bg-pink-500 active:bg-pink-600 shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150"
         type="button"
         onClick={() => setState({ ...state, toggleCreationForm: true })}
       >
-        Create Room +
+        Create Room
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth="1.5"
+          stroke="currentColor"
+          class="w-6 h-6"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+          />
+        </svg>
       </button>
       {state.toggleCreationForm ? (
         <div
@@ -248,6 +262,6 @@ export default () => {
           </div>
         </div>
       ) : null}
-    </>
+    </div>
   );
 };
