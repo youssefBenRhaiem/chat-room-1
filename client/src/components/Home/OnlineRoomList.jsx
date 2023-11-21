@@ -143,7 +143,7 @@ export default () => {
               className="p-2.5 w-fit bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               defaultValue={state.displayedRooms}
               onChange={(e) =>
-                setState({ ...state, displayedRooms: e.target.value })
+                setState({ ...state, displayedRooms: e.target.value, page: 1 })
               }
             >
               <option value="3">3</option>

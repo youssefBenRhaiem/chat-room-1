@@ -1,6 +1,9 @@
 const path = require("path");
 require("dotenv").config({ path: path.join(__dirname, ".env") });
 const express = require("express");
+const mongoose = require("mongoose");
+const jwt = require("jsonwebtoken");
+const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const { createServer } = require("http");
 const { Server } = require("socket.io");
@@ -12,14 +15,13 @@ const { ServerRoom } = require("./src/serverRoom");
 
 const app = express();
 const httpServer = createServer(app);
+//MiddleWare
 const io = new Server(httpServer, {
   cors: {
     origin: ["http://localhost:5173", "https://little-chat-room.netlify.app"],
     credentials: true,
   },
 });
-
-//express
 app.use(
   cors({
     origin: ["http://localhost:5173", "https://little-chat-room.netlify.app"],
@@ -27,6 +29,18 @@ app.use(
   })
 );
 app.use(express.json());
+app.use(cookieParser());
+
+const verifyJWT = (req, res, next) => {
+  const token = req.cookies.token;
+  if (!token) return res.status(400).json({ msg: "No token found" });
+  jwt.verify(token, process.env.SECRETTOKEN, (err, decoded) => {
+    if (err) return res.status(400).json({ msg: "Authentication error" });
+    req.username = decoded.username;
+    next();
+  });
+};
+
 // Define the proxy middleware for local development.
 const localProxyMiddleware = createProxyMiddleware({
   target: "http://localhost:3000",
@@ -58,6 +72,11 @@ app.use((req, res, next) => {
   console.log(req.path, req.method);
   next();
 });
+
+app.get("/api/verify", verifyJWT, (req, res) => {
+  res.json({ msg: "Verified", user: req.username });
+});
+
 /*  1: new ServerRoom({ id: 1, name: "test1", password: "123" }),
   2: new ServerRoom({ id: 2, name: "test2", password: "123" }),
   3: new ServerRoom({ id: 3, name: "test3", password: "123" }),
@@ -162,3 +181,7 @@ const PORT = process.env.PORT;
 httpServer.listen(PORT, () => {
   console.log(`listening on port ${PORT}`);
 });
+
+module.exports = {
+  verifyJWT,
+};
